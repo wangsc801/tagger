@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<body>
+    <h1>login</h1>
+    <form method="POST">
+        {% for field in form %}
+          {% if field.type == "BooleanField" %}
+            {{ field }} {{ field.label }} <b>{{ field.validators.message }}</b><br>
+          {% else %}
+          {{ field.label }} {{ field }}<br>
+          {% endif %}
+        {% endfor %}
+        <br>
+        <input type="submit" value="login"/>
+        <br>
+        <h1>{{login_info_hint}}</h1>
+        <br>
+        
+    </form>
+</body>
+</html>

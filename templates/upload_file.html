@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>upload file</title>
+</head>
+
+<body>
+  <h1>upload new File</h1>
+  <form method="post" enctype="multipart/form-data" onsubmit="return checkTagValidation();">
+    <input type="file" name="file">
+    <div id="tags">
+      <span>tag: </span>
+      <input id="tag_input" name="tag_input" type="text" />
+    </div>
+    <input type="submit" value="Upload">
+    <br>
+    <h1>{{upload_info_hint}}</h1>
+    <script src="{{ url_for('static',filename='js/upload_file.js')}}"></script>
+  </form>
+  <h3><a href="/gallary">my gallary</a></h3>
+  <h3><a href="/">home page</a></h3>
+</body>
+
+</html>

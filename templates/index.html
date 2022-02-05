@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+</head>
+
+<body>
+    <h1>Home Page</h1>
+    <br>
+    {% if current_user.is_authenticated %}
+    <h2>Hi {{ current_user.username }}!</h2>
+    <h3><a href="/gallary">my gallary</a></h3>
+    <h3><a href="/upload_file">upload file</a></h3>
+    <h5><a href="/logout">logout</a></h5>
+    {% else %}
+    <h3><a href="/login">login</a></h3>
+    {% endif %}
+    <br>
+</body>
+
+</html>
