@@ -9,22 +9,25 @@
 </head>
 <body>
     <h3><a href="/">home page</a></h3>
-    <form>
+    <h3><a href="/upload_file">upload file</a></h3>
+    <form method="post">
         <div id="search_section">
             <div id="search_bar_and_button">
-                <input type="text" />
+                {{ form.search }}
                 <input type="submit" value="search" />
             </div>
         </div>
     </form>
     <div id="content">
-        {% for f in paths %}
+        {% for f in files %}
         <div class="image_and_tag">
             <div class="image">
-                <img src="{{f[0]}}">
+                <img src="/static/{{f.file_path}}{{f.filename}}">
             </div>
             <div class="tag">
-                <span>{{f[1]}}</span>
+                <span>{{f.tag}}</span>
+                <br>
+                <span>{{f.upload_time}}</span>
             </div>
         </div>
         {% endfor %}

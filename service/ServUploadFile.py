@@ -3,7 +3,6 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 from model.UploadFile import UploadFile
 from datetime import datetime
-from model.User import User
 from util.UtilUploadFile import UtilUploadFile, uuid_without_seperator
 from flask_sqlalchemy import SQLAlchemy
 
@@ -20,7 +19,7 @@ class ServUploadFile:
         return UtilUploadFile(self.file).allowed_file()
 
     def upload(self) -> Path:
-        util=UtilUploadFile(self.file)
+        util = UtilUploadFile(self.file)
         upload_path = util.generate_path()
         filename = uuid_without_seperator() + Path(self.file.filename).suffix
         secured_filename = secure_filename(filename)
@@ -32,5 +31,9 @@ class ServUploadFile:
         db.session.commit()
         return upload_path
 
-    def get_by_uploader_id(self) -> list[UploadFile]:
+    def get_by_uploader_id(self):
         return UploadFile.query.filter_by(uploader_id=self.uploader_id).all()
+
+    def get_by_tag(self, tag: str):
+        return db.session.execute(
+            f"SELECT * FROM upload_file WHERE uploader_id={self.uploader_id} AND LOCATE(\"{tag}\",tag)>0;")
