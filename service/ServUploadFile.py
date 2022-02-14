@@ -4,9 +4,7 @@ from werkzeug.datastructures import FileStorage
 from model.UploadFile import UploadFile
 from datetime import datetime
 from util.UtilUploadFile import UtilUploadFile, uuid_without_seperator
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from database import db_session
 
 
 class ServUploadFile:
@@ -27,13 +25,13 @@ class ServUploadFile:
 
         uf = UploadFile(upload_path, secured_filename,
                         self.uploader_id, self.tag, datetime.now())
-        db.session.add(uf)
-        db.session.commit()
+        db_session.add(uf)
+        db_session.commit()
         return upload_path
 
     def get_by_uploader_id(self):
         return UploadFile.query.filter_by(uploader_id=self.uploader_id).all()
 
     def get_by_tag(self, tag: str):
-        return db.session.execute(
+        return db_session.execute(
             f"SELECT * FROM upload_file WHERE uploader_id={self.uploader_id} AND LOCATE(\"{tag}\",tag)>0;")

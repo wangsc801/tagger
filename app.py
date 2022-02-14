@@ -1,5 +1,4 @@
 from flask import Flask, send_from_directory
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 import os
 import toml
@@ -7,27 +6,31 @@ from route.index import index_bp
 from route.login import login_bp
 from route.upload_file import upload_file_bp
 from route.gallary import gallary_bp
+from database import db_session
 
 app = Flask(__name__)
 
 '''
 (python code)
 app.config['ENV']='development'
-app.config['SQLALCHEMY_DATABASE_URI']='mysql://username:password@localhost/db_name'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=True
-app.config['SQLALCHEMY_COMMIT_TEARDOWN']=True
-app.config['SECRET_KEY']="python -c 'import os; print(os.urandom(16))'"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
+app.config['SECRET_KEY']='a_string_as_secret_key'
 
-(toml file)
+(config.toml)
 ENV = "development"
 SQLALCHEMY_DATABASE_URI = "mysql://username:password@localhost/db_name"
-SQLALCHEMY_TRACK_MODIFICATIONS = true
-SQLALCHEMY_COMMIT_TEARDOWN = true
-SECRET_KEY = "python -c 'import os; print(os.urandom(16))'"
+SQLALCHEMY_TRACK_MODIFICATIONS = false
+SECRET_KEY = "a_string_as_secret_key"
 '''
+
+
 app.config.from_file('config.toml', load=toml.load)
 
-db = SQLAlchemy(app)
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.remove()
+
 
 app.register_blueprint(index_bp)
 app.register_blueprint(login_bp)
@@ -52,4 +55,3 @@ def favicon():
 
 if __name__ == '__main__':
     app.run(debug=True)
-    # app.run()

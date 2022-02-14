@@ -1,16 +1,15 @@
-from flask_sqlalchemy import SQLAlchemy
+from database import Base
+from sqlalchemy import Column, Integer, String, DateTime
 
-db = SQLAlchemy()
 
-
-class UploadFile(db.Model):
+class UploadFile(Base):
     __tablename__ = 'upload_file'
-    id = db.Column(db.Integer, primary_key=True)
-    file_path = db.Column(db.String(32))
-    filename = db.Column(db.String(48))
-    uploader_id = db.Column(db.Integer)
-    tag = db.Column(db.String(1024))
-    upload_time = db.Column(db.DateTime)
+    id = Column(Integer, primary_key=True)
+    file_path = Column(String(32))
+    filename = Column(String(48))
+    uploader_id = Column(Integer)
+    tag = Column(String(1024))
+    upload_time = Column(DateTime)
 
     def __init__(self, file_path, filename, uploader_id, tag, upload_time):
         self.file_path = self.__path_for_db(file_path)
