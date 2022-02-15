@@ -30,12 +30,12 @@ def upload_file():
         if file.filename == '':
             return render_template('upload_file.html', upload_info_hint="No selected file!")
         form = UploadForm(request.form)
-        ufservice = ServUploadFile(
-            file=file, uploader_id=current_user.id, tag=form.tag_input.data)
-        if not ufservice.is_allowed_upload():
+        uf_serv = ServUploadFile(file=file, uploader_id=current_user.id, tag=form.tag_input.data)
+        print(f"\n\n====\n{uf_serv.upload_file.filetype}\n=====\n")
+        if uf_serv.upload_file.filetype is None:
             return render_template('upload_file.html', upload_info_hint="not allowed file type!")
         if file:
-            ufservice.upload()
+            uf_serv.upload()
         return render_template('upload_file.html', upload_info_hint="upload successfully!")
         # return redirect(url_for('index_bp.index'))
     return

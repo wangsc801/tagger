@@ -30,4 +30,10 @@ def gallary():
         get_files=upload_file_serv.get_by_tag(tag)
         for f in get_files:
             files.append(f)
-    return render_template('gallary.html', files=files, form=form)
+    return render_template('gallary/index.html', files=files, form=form)
+
+
+@gallary_bp.route('/gallary/detail/<id>')
+def detail(id):
+    uf=ServUploadFile().get_by_id(id)
+    return render_template('gallary/detail.html', file=uf)

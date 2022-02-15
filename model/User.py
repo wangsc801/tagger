@@ -10,7 +10,8 @@ class User(Base, UserMixin):
     password = Column(String(32))
     role = Column(Integer)
 
-    def __init__(self, username, password):
+    def __init__(self, id=None, username=None, password=None):
+        self.id = id
         self.username = username
         self.password = password
 

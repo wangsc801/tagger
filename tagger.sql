@@ -25,8 +25,9 @@ INSERT INTO `role` VALUES (4,"banned");
 
 CREATE TABLE `upload_file`(
     id INT PRIMARY KEY AUTO_INCREMENT,
-    file_path VARCHAR(32),
+    filepath VARCHAR(32),
     filename VARCHAR(48),
+    filetype VARCHAR(16),
     uploader_id INT,
     tag VARCHAR(1024),
     upload_time DATETIME
